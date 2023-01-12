@@ -9,9 +9,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-movies_ns = api.namespaces('movies')
-directions_ns = api.namespaces('directions')
-genres_ns = api.namespaces('genres')
+movies_ns = api.namespace('movies')
+directions_ns = api.namespace('directions')
+genres_ns = api.namespace('genres')
 
 
 class Movie(db.Model):
@@ -48,7 +48,7 @@ class MovieSchema(Schema):
     year = fields.Int()
     rating = fields.Float()
     genre_id = fields.Int()
-    director_id = year = fields.Int()
+    director_id = fields.Int()
 
 
 class DirectorSchema(Schema):
