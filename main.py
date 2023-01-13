@@ -5,7 +5,7 @@ from marshmallow import Schema, fields
 
 app = Flask(__name__)
 api = Api(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -15,7 +15,7 @@ genres_ns = api.namespace('genres')
 
 
 class Movie(db.Model):
-    __tablename__ = 'movie'
+    #__tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     description = db.Column(db.String(255))
@@ -66,6 +66,13 @@ direction_schema = DirectorSchema()
 directions_schema = DirectorSchema(many=True)
 genre_schema = GenreSchema()
 genres_schema = GenreSchema(many=True)
+
+
+@movies_ns.route('/')
+class MoviesView(Resource):
+    def get(self):
+        return movies_schema.dump(Movie.query.all()), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
